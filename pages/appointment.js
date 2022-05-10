@@ -11,6 +11,30 @@ export default function Appointment() {
   const [gender,setgender]=useState("");
   const [appTtime,setappTtime]=useState("");
 
+
+function validateEmail (emailAdress)
+{
+  let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  if (emailAdress.match(regexEmail)) {
+    return true; 
+  } else {
+    return false; 
+  }
+}
+
+function validatePhone (phone)
+{
+  let regexP = /^\+(?:[0-9] ?){6,14}[0-9]$/;
+  if (phone.match(regexP)) {
+    return true; 
+  } else {
+    return false; 
+  }
+}
+
+
+
+
 async function make_appointment(e)
  {
    e.preventDefault();
@@ -29,10 +53,25 @@ async function make_appointment(e)
      errp=1;
    }
 
+   if(!validatePhone (PNumber))
+   {
+     $("#errphone").html("Enter Valid Phone No")
+     errp=1;
+   }
+
+
+   
+
    if(email=="")
    {
      $("#erremail").html("Required")
      errp=1;
+   }
+
+   if(!validateEmail(email))
+   {
+   	 $("#erremail").html("Enter Valid Email")
+     errp=1;	
    }
 
    if(Acategory=="")
@@ -64,7 +103,7 @@ async function make_appointment(e)
             $('#afblank').trigger("reset");
             $(".eps").html("*");
           }else{
-            $("#errs").html("!Sorry Try Again");
+            $("#errs").html("Sorry try again check mandatory fields and valid email or phone no ");
           }
       })
 
